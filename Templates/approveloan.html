@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ApproveLoans</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'myaccount' %}">LoanApplication</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{% url 'myaccount' %}">Home</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Approve Loans</h1>
+
+        <form method="POST" action="{% url 'approveloan' %}">
+            {% csrf_token %}
+
+            <table>
+                <tr>
+                    <th>LoanId</th>
+                    <th>Name</th>
+                    <th>LoanType</th>
+                    <th>LoanStatus</th>
+                </tr>
+
+                {% for loan in loansAll %}
+                <tr>
+                    <td>{{loan.LoanId}}</td>
+                    <td>{{loan.user}}</td>
+                    <td> {{loan.AvailableLoans}}</td>
+                    <td>
+                        {% if loan.ApprovalStatus %}
+                        <input type="checkbox" name="approvalstatus" value="{{loan.LoanId}}" checked />
+                        {% else %}
+                        <input type="checkbox" name="approvalstatus" value="{{loan.LoanId}}" />
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table><br />
+            <center><input type="submit" value="Approve Loans" class="btn btn-success" /></center>
+        </form>
+    </div>
+
+</body>
+</html>

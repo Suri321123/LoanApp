@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ShowLoans</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'myaccount' %}">LoanApplication</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{% url 'applyloan' %}">Apply Loans</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <table>
+            <tr>
+                <th>LoanId</th>
+                <th>LoanType</th>
+                <th>LoanStatus</th>
+            </tr>
+            {% for loan in loans %}
+            <tr>
+                <td>{{loan.LoanId}}</td>
+                <td> {{loan.AvailableLoans}}</td>
+                <td>{% if loan.ApprovalStatus %} Approved {% else %}Pendind For Approval {% endif %}</td>
+            </tr>
+
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
